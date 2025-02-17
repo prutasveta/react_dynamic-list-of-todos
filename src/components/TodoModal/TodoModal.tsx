@@ -12,7 +12,7 @@ type Props = {
 export const TodoModal: React.FC<Props> = ({ selectedTodo, onClick }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
   const [loading, setLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -20,7 +20,7 @@ export const TodoModal: React.FC<Props> = ({ selectedTodo, onClick }) => {
     getTodoUser(selectedTodo.userId)
       .then(setUser)
       .catch(() => {
-        // setErrorMessage('Try again later');
+        setErrorMessage('Try again later');
       })
       .finally(() => setLoading(false));
   }, []);
@@ -29,7 +29,7 @@ export const TodoModal: React.FC<Props> = ({ selectedTodo, onClick }) => {
     <div className="modal is-active" data-cy="modal">
       <div className="modal-background" />
 
-      {loading ? (
+      {loading && !errorMessage ? (
         <Loader />
       ) : (
         <div className="modal-card">

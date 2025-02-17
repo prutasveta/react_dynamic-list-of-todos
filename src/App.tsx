@@ -15,7 +15,7 @@ export const App: React.FC = () => {
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
 
   const [loading, setLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState<string>('');
@@ -25,7 +25,7 @@ export const App: React.FC = () => {
     getTodosFn()
       .then(setTodos)
       .catch(() => {
-        // setErrorMessage('Try again later');
+        setErrorMessage('Try again later');
       })
       .finally(() => setLoading(false));
   };
@@ -68,6 +68,10 @@ export const App: React.FC = () => {
 
             <div className="block">
               {loading && <Loader />}
+
+              {errorMessage && (
+                <p className="notification is-danger">{errorMessage}</p>
+              )}
 
               {!loading && todos.length > 0 && (
                 <TodoList
